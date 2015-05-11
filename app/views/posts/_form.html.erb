@@ -1,0 +1,19 @@
+<div class="well">
+    <%= form_for @post do |f| %>
+      <%= render "shared/errors", errors: @post.errors %>
+      <div class="control-group">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="control-group">
+        <%= f.label :url %>
+        <%= f.text_field :url %>
+      </div>
+      <div class="control-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, rows: 7 %>
+      </div>
+      <br>
+      <%= f.submit class: "btn btn-primary" %>
+    <% end %>
+</div>

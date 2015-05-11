@@ -1,0 +1,24 @@
+<p class="pull-right">
+  [<%= link_to "edit this post", edit_post_path(@post) %>]
+</p>
+<p>
+  <%= render @post.categories %>
+</p>
+
+<%= render "shared/content_title", title: @post.title %>
+
+<p>
+  <%= @post.description %>
+</p>
+<hr/>
+
+<!-- <% @comments.each do |comment| %>
+  <div class="well">
+    <h4><%= comment.user ? comment.user.username : "Unknown" %></h4>
+    <p>
+      <%= comment.body %>
+    </p>
+  </div>
+<% end %> -->
+
+<%= link_to "Back", posts_path %>
