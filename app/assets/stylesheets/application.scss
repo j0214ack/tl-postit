@@ -26,6 +26,20 @@
   color: #ababab;
 }
 
+.category_link, .category_link:hover {
+  color: white;
+}
+
+.badge-large {
+  font-size: 20px;
+  line-height: 28px;
+  border-radius: 18px;
+  padding: 0px 16px 0px 16px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+
 div.nav_item {
   margin-left: 25px;
   float: left;
@@ -41,4 +55,3 @@ div.nav_item {
 div.comment_votes {
   padding: 10px;
 }
-

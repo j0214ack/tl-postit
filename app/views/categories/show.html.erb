@@ -1,0 +1,8 @@
+<p class="pull-right">
+  [<%= link_to "Edit this category", edit_category_path(@category) %>]
+</p>
+
+<%= render "shared/content_title",
+           title: "Showing category: #{@category.name}" %>
+
+<%= render @posts %>
