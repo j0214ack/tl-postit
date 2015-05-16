@@ -2,7 +2,9 @@
   [<%= link_to "Edit this category", edit_category_path(@category) %>]
 </p>
 
+<% all_posts_link = link_to("All Posts", posts_path) %>
+
 <%= render "shared/content_title",
-           title: "Showing category: #{@category.name}" %>
+           title: "#{all_posts_link} &raquo; #{@category.name}".html_safe %>
 
 <%= render @posts %>

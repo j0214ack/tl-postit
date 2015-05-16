@@ -1,8 +1,8 @@
 <div class="row">
   <div class="span8 well">
-    <h4><%= comment.user ? comment.user.username : "Unknown" %></h4>
-    <p>
-      <%= comment.body %>
-    </p>
+      "<em><%= comment.body %></em>" <br>
+      <span class="quiet">by</span>
+      <%= comment.user ? comment.user.username : "Unknown" %></h4>
+      <small>at <%= comment.created_at %></small>
   </div>
 </div>

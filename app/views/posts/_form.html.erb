@@ -13,7 +13,11 @@
         <%= f.label :description %>
         <%= f.text_area :description, rows: 7 %>
       </div>
-      <br>
+      <div class="control-group">
+        <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |b| %>
+          <%= b.label(class: "checkbox inline"){ b.check_box + b.text }%>
+        <% end %>
+      </div>
       <%= f.submit class: "btn btn-primary" %>
     <% end %>
 </div>

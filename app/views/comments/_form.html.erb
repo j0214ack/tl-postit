@@ -1,0 +1,9 @@
+<%= form_for [@post, @comment] do |f| %>
+  <%= render "shared/errors", errors: @comment.errors %>
+  <div class="control-group">
+    <%= f.label :body, "Leave a comment" %>
+    <%= f.text_area :body, class: "span4", rows: 3 %>
+  </div>
+  <%= f.submit class: "btn btn-primary"%>
+
+<% end %>
