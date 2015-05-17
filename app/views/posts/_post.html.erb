@@ -1,13 +1,13 @@
 <div class="row">
   <div class="span8 well">
     <%= render post.categories %>
-    <h4><%= link_to post.title, post_path(post)%></h4>
+    <h4><%= link_to post.title, fix_url(post.url) %></h4>
     <p>
       <%= post.description %>
     </p>
     <span class="quiet">posted by</span>
     <%= post.user ? post.user.username : "Unknown" %>
-    <small>at <%= post.created_at %></small>
+    <small>at <%= time_format post.created_at %></small>
     <span>
       <%= link_to pluralize(post.comments.size, "Comment"), post_path(post) %>
     </span>

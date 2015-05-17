@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   def create
-    @comment = Comment.new(comment_params)
+    # @comment = Comment.new(comment_params)
     @post = Post.find(params[:post_id])
-    @comment.post_id = params[:post_id]
+    # @comment.post_id = params[:post_id]
+    @comment = @post.comments.build(comment_params)
 
     if @comment.save
       flash[:notice] = "Successfully commented."
