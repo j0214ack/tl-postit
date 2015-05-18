@@ -1,23 +1,25 @@
-<div class="well">
-    <%= form_for @post do |f| %>
-      <%= render "shared/errors", errors: @post.errors %>
-      <div class="control-group">
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-      </div>
-      <div class="control-group">
-        <%= f.label :url %>
-        <%= f.text_field :url %>
-      </div>
-      <div class="control-group">
-        <%= f.label :description %>
-        <%= f.text_area :description, rows: 7 %>
-      </div>
-      <div class="control-group">
-        <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |b| %>
-          <%= b.label(class: "checkbox inline"){ b.check_box + b.text }%>
-        <% end %>
-      </div>
-      <%= f.submit class: "btn btn-primary" %>
-    <% end %>
+<div class="row">
+  <div class="well span8">
+      <%= form_for @post do |f| %>
+        <%= render "shared/errors", errors: @post.errors %>
+        <div class="control-group">
+          <%= f.label :title %>
+          <%= f.text_field :title %>
+        </div>
+        <div class="control-group">
+          <%= f.label :url %>
+          <%= f.text_field :url %>
+        </div>
+        <div class="control-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, rows: 7 %>
+        </div>
+        <div class="control-group">
+          <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |b| %>
+            <%= b.label(class: "checkbox inline"){ b.check_box + b.text }%>
+          <% end %>
+        </div>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+  </div>
 </div>

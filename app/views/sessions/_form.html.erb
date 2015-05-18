@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="well span8">
+    <%= form_tag(login_path, method: :post) do %>
+      <div class="control-group">
+        <%= label_tag :username, "Acount Name" %>
+        <%= text_field_tag(:username, @username || "")%>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :password %>
+        <%= password_field_tag :password %>
+      </div>
+
+      <%= submit_tag "Log in", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
