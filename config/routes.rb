@@ -7,7 +7,20 @@ PostitTemplate::Application.routes.draw do
 
   resources :posts do
     resources :comments, only: :create
+
+    member do
+      post :vote
+      put :revote
+    end
   end
+
+  resources :comments, only: [] do
+    member do
+      post :vote
+      put :revote
+    end
+  end
+
   resources :categories, except: :index
-  resources :users, only: [:create, :new, :edit], path_name: { new: "register"}
+  resources :users, except: [:destroy, :index], path_name: { new: "register"}
 end

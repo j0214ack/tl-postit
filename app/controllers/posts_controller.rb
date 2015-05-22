@@ -18,7 +18,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.user = User.first
+    @post.user = current_user
 
     if @post.save
       # redirect_to post_path(@post)
@@ -30,16 +30,70 @@ class PostsController < ApplicationController
   end
 
   def edit
+    unless @post.user == current_user
+      flash[:error] = "You can't edit this post."
+      redirect_to @post
+    end
   end
 
   def update
-    @post.user = User.first
-    if @post.update(post_params)
-      # redirect_to post_path(@post)
-      flash[:notice] = "You've successfully edited this post."
-      redirect_to @post
+    if @post.user == current_user
+      if @post.update(post_params)
+        flash[:notice] = "Successfully edited."
+        redirect_to @post
+      else
+        render "edit"
+      end
     else
-      render "edit"
+      flash[:error] = "You can't edit this post."
+      redirect_to @post
+    end
+  end
+
+  def revote
+    @post = Post.find(params[:id])
+    @vote = @post.votes.where(user: current_user).first
+
+    case @vote.vote
+    when true
+      if params[:vote] == "true"
+        @vote.vote = nil
+      else
+        @vote.vote = false
+      end
+    when false
+      if params[:vote] == "true"
+        @vote.vote = true
+      else
+        @vote.vote = nil
+      end
+    when nil
+      if params[:vote] == "true"
+        @vote.vote = true
+      else
+        @vote.vote = false
+      end
+    end
+
+    if @vote.save
+      flash[:notice] = "Voted!"
+      redirect_to :back
+    else
+      flash[:error] = "Something wrong"
+      redirect_to :back
+    end
+  end
+
+  def vote
+    @post = Post.find(params[:id])
+    @vote = @post.votes.build(vote: params[:vote], user: current_user)
+
+    if @vote.save
+      flash[:notice] = "Voted!"
+      redirect_to :back
+    else
+      flash[:error] = "Something wrong"
+      redirect_to :back
     end
   end
 

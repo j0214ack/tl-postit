@@ -1,4 +1,5 @@
 <div class="row">
+  <%= render "votes/vote", vote_obj(post, :vote_post_path, :revote_post_path) %>
   <div class="span8 well">
     <%= render post.categories %>
     <h4><%= link_to post.title, fix_url(post.url) %></h4>

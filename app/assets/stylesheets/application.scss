@@ -55,3 +55,12 @@ div.nav_item {
 div.comment_votes {
   padding: 10px;
 }
+
+a .fa {
+  color: black;
+  width: 100%;
+}
+
+a .fa.voted {
+  color: #4bb2c6;
+}

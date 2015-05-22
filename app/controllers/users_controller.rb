@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_action :require_user, except: [:new, :create, :show]
+
   def new
     @user = User.new
   end
@@ -12,6 +15,27 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       render "new"
+    end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @posts = @user.posts
+    @comments = @user.comments
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update(user_params)
+      flash[:notice] = "Successfully updated."
+      redirect_to @user
+    else
+      render "edit"
     end
   end
 

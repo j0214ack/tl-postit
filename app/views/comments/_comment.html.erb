@@ -1,4 +1,5 @@
 <div class="row">
+  <%= render "votes/vote", vote_obj(comment, :vote_comment_path, :revote_comment_path) %>
   <div class="span8 well">
       "<em><%= comment.body %></em>" <br>
       <span class="quiet">by</span>
