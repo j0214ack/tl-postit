@@ -19,48 +19,17 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @vote = @comment.votes.where(user: current_user).first
 
-    case @vote.vote
-    when true
-      if params[:vote] == "true"
-        @vote.vote = nil
-      else
-        @vote.vote = false
-      end
-    when false
-      if params[:vote] == "true"
-        @vote.vote = true
-      else
-        @vote.vote = nil
-      end
-    when nil
-      if params[:vote] == "true"
-        @vote.vote = true
-      else
-        @vote.vote = false
-      end
-    end
-
-    if @vote.save
-      flash[:notice] = "Voted!"
-      redirect_to :back
-    else
-      flash[:error] = "Something wrong"
-      redirect_to :back
-    end
+    update_vote
+    save_vote(@comment)
   end
 
   def vote
     @comment = Comment.find(params[:id])
     @vote = @comment.votes.build(vote: params[:vote], user: current_user)
 
-    if @vote.save
-      flash[:notice] = "Voted!"
-      redirect_to :back
-    else
-      flash[:error] = "Something wrong"
-      redirect_to :back
-    end
+    save_vote(@comment)
   end
+
   private
 
   def comment_params

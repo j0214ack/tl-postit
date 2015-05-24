@@ -1,0 +1,1 @@
+$("#<%= @voted_obj_html_id %>").replaceWith('<%= escape_javascript(render "votes/vote", vote_obj(@obj, @vote_path, @revote_path)) %>')

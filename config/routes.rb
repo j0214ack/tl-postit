@@ -5,7 +5,7 @@ PostitTemplate::Application.routes.draw do
   post '/login', to: "sessions#create"
   get '/logout', to: "sessions#destroy"
 
-  resources :posts do
+  resources :posts, param: :slug do
     resources :comments, only: :create
 
     member do
@@ -21,6 +21,8 @@ PostitTemplate::Application.routes.draw do
     end
   end
 
-  resources :categories, except: :index
-  resources :users, except: [:destroy, :index], path_name: { new: "register"}
+  resources :categories, except: :index, param: :slug
+  resources :users, except: [:destroy, :index],
+                    path_name: { new: "register"},
+                    param: :slug
 end

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_action :set_post, only: [:show, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :vote, :revote]
   before_action :require_user, except: [:index, :show]
 
   def index
@@ -51,50 +51,16 @@ class PostsController < ApplicationController
   end
 
   def revote
-    @post = Post.find(params[:id])
     @vote = @post.votes.where(user: current_user).first
 
-    case @vote.vote
-    when true
-      if params[:vote] == "true"
-        @vote.vote = nil
-      else
-        @vote.vote = false
-      end
-    when false
-      if params[:vote] == "true"
-        @vote.vote = true
-      else
-        @vote.vote = nil
-      end
-    when nil
-      if params[:vote] == "true"
-        @vote.vote = true
-      else
-        @vote.vote = false
-      end
-    end
-
-    if @vote.save
-      flash[:notice] = "Voted!"
-      redirect_to :back
-    else
-      flash[:error] = "Something wrong"
-      redirect_to :back
-    end
+    update_vote
+    save_vote(@post)
   end
 
   def vote
-    @post = Post.find(params[:id])
     @vote = @post.votes.build(vote: params[:vote], user: current_user)
 
-    if @vote.save
-      flash[:notice] = "Voted!"
-      redirect_to :back
-    else
-      flash[:error] = "Something wrong"
-      redirect_to :back
-    end
+    save_vote(@post)
   end
 
   private
@@ -104,6 +70,6 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(slug: params[:slug])
   end
 end

@@ -1,25 +1,26 @@
-<div class="span0 well text-center">
+<div class="span0 well text-center"
+     id="<%= "#{obj.class.name.downcase}_#{obj.id}_vote" %>">
   <% if logged_in? %>
     <% @vote = obj.votes.where(user: current_user).first %>
   <% end %>
   <% if @vote.nil? %>
-    <%= link_to up_vote_path, method: :post do %>
+    <%= link_to up_vote_path, method: :post, remote: true do %>
       <i class="fa fa-chevron-up"></i>
     <% end %>
     <br>
       <%= pluralize(obj.votes_sum, "vote") %>
     <br>
-    <%= link_to down_vote_path, method: :post do %>
+    <%= link_to down_vote_path, method: :post, remote: true do %>
       <i class="fa fa-chevron-down"></i>
     <% end %>
   <% else %>
-    <%= link_to up_revote_path, method: :put do %>
+    <%= link_to up_revote_path, method: :put, remote: true do %>
       <i class="fa fa-chevron-up <%= "voted" if @vote.vote == true %>"></i>
     <% end %>
     <br>
       <%= pluralize(obj.votes_sum, "vote") %>
     <br>
-    <%= link_to down_revote_path, method: :put do %>
+    <%= link_to down_revote_path, method: :put, remote: true do %>
       <i class="fa fa-chevron-down <%= "voted" if @vote.vote == false %>"></i>
     <% end %>
   <% end %>

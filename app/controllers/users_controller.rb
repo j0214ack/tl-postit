@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :require_user, except: [:new, :create, :show]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def new
     @user = User.new
@@ -19,18 +20,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @posts = @user.posts
     @comments = @user.comments
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit ; end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       flash[:notice] = "Successfully updated."
       redirect_to @user
@@ -43,5 +39,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :password, :password_confirmation)
+  end
+
+  def set_user
+    @user = User.find_by(slug: params[:slug])
   end
 end

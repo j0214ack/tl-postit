@@ -28,4 +28,42 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def save_vote(voted_obj)
+    @voted_obj_html_id = "#{voted_obj.class.name.downcase}_#{voted_obj.id}_vote"
+    @obj = voted_obj
+    @vote_path = :"vote_#{voted_obj.class.name.downcase}_path"
+    @revote_path = :"revote_#{voted_obj.class.name.downcase}_path"
+    @vote.save
+    respond_to do |format|
+      format.html do
+        if @vote.valid?
+          flash[:notice] = "Voted!"
+          redirect_to :back
+        else
+          flash[:error] = "Something wrong"
+          redirect_to :back
+        end
+      end
+      format.js do
+        if @vote.valid?
+          render "votes/vote"
+        else
+          render "votes/vote_error"
+        end
+      end
+    end
+  end
+
+  def update_vote
+    if @vote.vote == nil
+      if params[:vote] == "true"
+        @vote.vote = true
+      else
+        @vote.vote = false
+      end
+    else
+      @vote.vote = nil
+    end
+  end
+
 end
