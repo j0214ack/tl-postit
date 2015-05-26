@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Sluggable
+  sluggable_column :username
+
   has_many :posts
   has_many :comments
   has_many :votes
@@ -12,14 +15,4 @@ class User < ActiveRecord::Base
                                  message: "can't have non-word characters."}
   validates :password, presence: true, confirmation: true,
                        length: { minimum: 3 }, on: :create
-
-  before_create :generate_slug
-
-  def generate_slug
-    self.slug = username
-  end
-
-  def to_param
-    self.slug
-  end
 end
