@@ -21,10 +21,27 @@ class ApplicationController < ActionController::Base
     @categories = Category.all
   end
 
+  def require_creator_or_admin
+    unless logged_in? && ( current_user.is_admin? || self.user == current_user)
+      show_err "You can't do that"
+    end
+  end
+
   def require_user
-    unless logged_in?
-      flash[:error] = "You must log in to perform this action."
-      redirect_to root_path
+    show_err "You must log in to perform this action." unless logged_in?
+  end
+
+  def require_admin
+    show_err "You can't do that." unless logged_in? && current_user.is_admin?
+  end
+
+  def show_err(err_msg)
+    respond_to do |format|
+      format.html do
+        flash[:error] = err_msg
+        redirect_to root_path
+      end
+      format.js { render "shared/error", locals: { msg: err_msg } }
     end
   end
 

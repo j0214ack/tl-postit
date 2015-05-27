@@ -13,4 +13,9 @@ class Post < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :url, presence: true
+
+  def as_json(options = {})
+    options[:except] ||= [:id, :user_id]
+    super.as_json(options)
+  end
 end

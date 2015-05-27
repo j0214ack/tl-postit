@@ -3,7 +3,10 @@ module ApplicationHelper
     # dates = %w(Sun Mon Tue Wed Thu Fri Sat)
     # "#{dates[t.wday]} #{t.month}/#{t.day}/#{t.year % 100} #{t.hour}:#{t.min}"
 
-    t.strftime("%a %d %b %Y %I:%M %p")
+    if current_user && current_user.time_zone
+      t = t.in_time_zone(current_user.time_zone)
+    end
+    t.strftime("%a %d %b %Y %I:%M %p %Z")
   end
 
   def vote_obj(obj, vote_path, revote_path)

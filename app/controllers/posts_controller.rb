@@ -2,14 +2,24 @@ class PostsController < ApplicationController
 
   before_action :set_post, only: [:show, :edit, :update, :vote, :revote]
   before_action :require_user, except: [:index, :show]
+  before_action :require_creator_or_admin, only: [:edit, :update]
 
   def index
     @posts = Post.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts }
+    end
   end
 
   def show
     @comments = @post.comments
     @comment = Comment.new
+    respond_to do |format|
+      format.html
+      format.json { render json: {post: @post, comments: @comments} }
+      format.xml { render xml: {post: @post, comments: @comments} }
+    end
   end
 
   def new
@@ -30,23 +40,14 @@ class PostsController < ApplicationController
   end
 
   def edit
-    unless @post.user == current_user
-      flash[:error] = "You can't edit this post."
-      redirect_to @post
-    end
   end
 
   def update
-    if @post.user == current_user
-      if @post.update(post_params)
-        flash[:notice] = "Successfully edited."
-        redirect_to @post
-      else
-        render "edit"
-      end
-    else
-      flash[:error] = "You can't edit this post."
+    if @post.update(post_params)
+      flash[:notice] = "Successfully edited."
       redirect_to @post
+    else
+      render "edit"
     end
   end
 

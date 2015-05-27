@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :comments
   has_many :votes
+  has_many :roles
 
   has_secure_password validations: false
 
@@ -15,4 +16,8 @@ class User < ActiveRecord::Base
                                  message: "can't have non-word characters."}
   validates :password, presence: true, confirmation: true,
                        length: { minimum: 3 }, on: :create
+
+  def is_admin?
+    self.roles.any? { |r| r.role == "admin" }
+  end
 end
